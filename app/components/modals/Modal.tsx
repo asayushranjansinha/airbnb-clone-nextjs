@@ -62,8 +62,7 @@ const Modal: React.FC<ModalProps> = ({
     <div
       className="fixed inset-0 z-50 h-full w-full bg-neutral-800/70 overflow-x-hidden overflow-y-auto outline-none focus:outline-none justify-center 
       items-center 
-      rounded-xl
-      flex"
+      rounded-xl flex"
     >
       <div
         className="
@@ -77,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({
             lg:w-3/6
             xl:w-2/5
             "
-            >
+      >
         {/* Content */}
         <div
           className={`
