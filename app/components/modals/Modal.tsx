@@ -60,136 +60,90 @@ const Modal: React.FC<ModalProps> = ({
   }
   return (
     <div
-      className="
-    flex
-    items-center
-    justify-center
-    overflow-x-hidden
-    overflow-y-auto
-    fixed
-    inset-0
-    z-50
-    outline-none
-    focus:outline-none
-    bg-neutral-800/70
-  "
+      className="fixed inset-0 z-50 h-full w-full bg-neutral-800/70 overflow-x-hidden overflow-y-auto outline-none focus:outline-none justify-center 
+      items-center 
+      rounded-xl
+      flex"
     >
       <div
         className="
-        relative
-        w-full
-        md:w-4/6
-        lg:w-3/6
-        xl:w-2/5
-        my-6
-        mx-auto
-        h-full
-        lg:h-auto
-        md:h-auto
-      "
-      >
+            relative
+            my-auto
+            mx-auto 
+            h-full
+            w-full
+            md:h-5/6
+            md:w-4/6
+            lg:w-3/6
+            xl:w-2/5
+            "
+            >
         {/* Content */}
         <div
           className={`
-            duration-300
-            translate
             h-full
+            translate
+            duration-300
             ${showModal ? "translate-y-0" : "translate-y-full"}
             ${showModal ? "opacity-100" : "opacity-0"}
-        `}
+          `}
         >
           <div
             className="
-            translate
-            h-full
-            lg:h-auto
-            md:h-auto
-            rounded-lg
-            shadow-lg
-            relative
-            flex
-            flex-col
-            w-full
-            bg-white
-            outline-none
-            focus:outline-none
-          "
+                h-full
+                border-0
+                shadow-lg
+                rounded-xl
+                flex 
+                flex-col
+                w-full
+                bg-white
+                outline-none
+                focus:outline-none
+              "
           >
             {/* Header */}
-            <div
-              className="
-                flex
-                items-center
-                p-6
-                rounded-t
-                justify-center
-                relative
-                border-b-[1px]
-              "
-            >
+            <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px]">
               <button
-                className="
-                  p-1
-                  border-0
-                  hover:opacity-70
-                  transition
-                  absolute
-                  left-9
-                "
+                className="p-1 border-0 hover:opacity-70 transition absolute left-9"
                 onClick={handleClose}
               >
                 <IoMdClose size={18} />
               </button>
-              <div
-                className="
-                text-lg
-                font-semibold
-              "
-              >
-                {title}
-              </div>
+              <div className="text-lg font-semibold">{title}</div>
             </div>
-
-            {/* Body */}
-            <div
-              className="
-              relative p-6 flex-auto
-            "
-            >
+            {/* Main body */}
+            <div className="relative p-6 flex-auto overflow-y-auto">
+              {/*body*/}
               {body}
-            </div>
 
-            {/* Footer */}
-            <div
-              className="
-              flex flex-col gap-2 p-6
-            "
-            >
-              <div
-                className="
-                flex
-                flex-row
-                items-center
-                gap-4
-                w-full
-              "
-              >
-                {secondaryAction && secondaryActionLabel && (
+              {/*footer*/}
+              <div className="flex flex-col gap-2 mt-6">
+                <div
+                  className="
+                    flex 
+                    flex-row 
+                    items-center 
+                    gap-4 
+                    w-full
+                  "
+                >
+                  {secondaryAction && secondaryActionLabel && (
+                    <Button
+                      disabled={disabled}
+                      label={secondaryActionLabel}
+                      onClick={handleSecondaryAction}
+                      outline
+                    />
+                  )}
                   <Button
-                    onClick={secondaryAction}
                     disabled={disabled}
-                    label={secondaryActionLabel}
-                    outline
+                    label={actionLabel}
+                    onClick={handleSubmit}
                   />
-                )}
-                <Button
-                  onClick={handleSubmit}
-                  disabled={disabled}
-                  label={actionLabel}
-                />
+                </div>
+                {footer}
               </div>
-
-              {footer}
             </div>
           </div>
         </div>
