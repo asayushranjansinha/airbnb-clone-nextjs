@@ -1,63 +1,67 @@
-"use client"
-import { useCallback, useState } from "react"
-import { FieldValues, useForm, SubmitHandler } from "react-hook-form"
-import useRegisterModal from "../../hooks/useRegisterModal"
-import useLoginModal from "../../hooks/useLoginModal"
+"use client";
+import { useCallback, useState } from "react";
+import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
+import useRegisterModal from "../../hooks/useRegisterModal";
+import useLoginModal from "../../hooks/useLoginModal";
 
-import { FcGoogle } from "react-icons/fc"
-import { AiOutlineGithub } from "react-icons/ai"
-import Modal from "./Modal"
-import Heading from "../Heading"
-import Input from "../inputs/Input"
-import Button from "../Button"
+import { FcGoogle } from "react-icons/fc";
+import { AiOutlineGithub } from "react-icons/ai";
+import Modal from "./Modal";
+import Heading from "../Heading";
+import Input from "../inputs/Input";
+import Button from "../Button";
 
-import axios from "axios"
-import { signIn } from "next-auth/react"
-import { toast } from "react-hot-toast"
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 const RegisterModal = () => {
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false)
+  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
-  const registerModal = useRegisterModal()
-  const loginModal = useLoginModal()
-
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
     defaultValues: {
       name: "",
       email: "",
-      password: ""
-    }
-  }) 
+      password: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true)
-    axios.post("/api/register", data)
+    setIsLoading(true);
+    axios
+      .post("/api/register", data)
       .then(() => {
-        toast.success("Successfully registered!")
-        registerModal.onClose()
-        loginModal.onOpen()
+        toast.success("Successfully registered!");
+        registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
-        toast.error(error.response.data)
+        toast.error(error.response.data);
       })
       .finally(() => {
-        setIsLoading(false)
-      })
-  }
+        setIsLoading(false);
+      });
+  };
 
   const handleToggle = useCallback(() => {
-    loginModal.onOpen()
-    registerModal.onClose()
-  }, [])
+    loginModal.onOpen();
+    registerModal.onClose();
+  }, []);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading 
+      <Heading
         title="Welcome to Airbnb"
         subtitle="Please sign up to continue"
       />
-      <Input 
+      <Input
         id="name"
         label="Name"
         register={register}
@@ -66,7 +70,7 @@ const RegisterModal = () => {
         type="text"
         required
       />
-      <Input 
+      <Input
         id="email"
         label="Email"
         register={register}
@@ -75,7 +79,7 @@ const RegisterModal = () => {
         type="email"
         required
       />
-      <Input 
+      <Input
         id="password"
         label="Password"
         register={register}
@@ -85,36 +89,45 @@ const RegisterModal = () => {
         required
       />
     </div>
-  )
+  );
 
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button 
+      <Button
         outline
         label="Login with Google"
-        onClick={() => signIn("google")}
-        icon={ FcGoogle }
+        onClick={() => {
+          signIn("google");
+          toast.success("Successfully registered!");
+        }}
+        icon={FcGoogle}
       />
-      <Button 
+      <Button
         outline
         label="Login with Github"
-        onClick={() => signIn("github")}
-        icon={ AiOutlineGithub }
+        onClick={() => {
+          signIn("github");
+          toast.success("Successfully registered!");
+        }}
+        icon={AiOutlineGithub}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row gap-2 items-center justify-center">
           <div>Already have an account?</div>
-          <div 
+          <div
             onClick={handleToggle}
-            className="text-neutral-800 cursor-pointer hover:underline">Log In</div>
+            className="text-neutral-800 cursor-pointer hover:underline"
+          >
+            Log In
+          </div>
         </div>
       </div>
     </div>
-  )
-    
+  );
+
   return (
-    <Modal 
+    <Modal
       disabled={isLoading}
       isOpen={registerModal.isOpen}
       title="Register"
@@ -124,7 +137,7 @@ const RegisterModal = () => {
       body={bodyContent}
       footer={footerContent}
     />
-  )
-}
+  );
+};
 
-export default RegisterModal
+export default RegisterModal;
