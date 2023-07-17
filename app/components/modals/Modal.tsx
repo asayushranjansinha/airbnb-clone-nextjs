@@ -60,16 +60,15 @@ const Modal: React.FC<ModalProps> = ({
   }
   return (
     <div
-      className="fixed inset-0 z-50 h-full w-full bg-neutral-800/70 overflow-x-hidden overflow-y-auto outline-none focus:outline-none justify-center 
-      items-center 
-      rounded-xl flex"
+      className="fixed inset-0 z-50 h-full w-full bg-neutral-800/70 overflow-x-hidden outline-none focus:outline-none justify-center 
+      items-center flex"
     >
       <div
         className="
             relative
             my-auto
             mx-auto 
-            h-full
+            h-min
             w-full
             md:h-5/6
             md:w-4/6
@@ -89,7 +88,8 @@ const Modal: React.FC<ModalProps> = ({
         >
           <div
             className="
-                h-full
+                h-fit
+                max-h-full	
                 border-0
                 shadow-lg
                 rounded-xl

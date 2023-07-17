@@ -14,10 +14,11 @@ import { toast } from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import RegisterModal from "./RegisterModal";
 
 const LoginModal = () => {
   const router = useRouter();
-  // const registerModal = useRegisterModal();
+  const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -45,9 +46,13 @@ const LoginModal = () => {
         toast.error(res.error);
       }
       router.refresh();
-      
     });
   };
+
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -96,9 +101,9 @@ const LoginModal = () => {
         <div>{"Don't"} have an account?</div>
         <div
           className="text-neutral-800 cursor-pointer hover:underline "
-          onClick={loginModal.onClose}
+          onClick={(e)=>toggle()}
         >
-          Sign up
+          Create Account
         </div>
       </div>
     </div>

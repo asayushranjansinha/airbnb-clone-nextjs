@@ -12,6 +12,9 @@ const Logo = () => {
         height={100}
         width={100}
         priority
+        onClick={()=>{
+          router.push('/')
+        }}
     />
   )
 }
