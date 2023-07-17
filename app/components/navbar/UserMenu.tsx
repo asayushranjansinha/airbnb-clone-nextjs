@@ -5,8 +5,10 @@ import Avatar from "../Avatar";
 import MenuItems from "./MenuItems";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import {signOut} from 'next-auth/react'
-import { SafeUser } from "@/types";
+
+import { signOut } from "next-auth/react";
+import { SafeUser } from "@/app/types";
+import { toast } from "react-hot-toast";
 interface UserMenuProps {
   currentUser?: SafeUser | null;
 }
@@ -45,12 +47,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItems onClick={()=>{}} label="My Trips" />
-                <MenuItems onClick={()=>{}} label="My Favourites" />
-                <MenuItems onClick={()=>{}} label="My Reservations" />
-                <MenuItems onClick={()=>{}} label="My Properties" />
-                <MenuItems onClick={()=>{}} label="Airbnb my home" />
-                <MenuItems onClick={()=>signOut()} label="Logout" />
+                <MenuItems onClick={() => {}} label="My Trips" />
+                <MenuItems onClick={() => {}} label="My Favourites" />
+                <MenuItems onClick={() => {}} label="My Reservations" />
+                <MenuItems onClick={() => {}} label="My Properties" />
+                <MenuItems onClick={() => {}} label="Airbnb my home" />
+                <MenuItems
+                  onClick={() => {
+                    signOut();
+                    toast.success("Logged Out");
+                  }}
+                  label="Logout"
+                />
               </>
             ) : (
               <>

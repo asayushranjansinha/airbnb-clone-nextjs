@@ -12,12 +12,12 @@ import Input from "../inputs/Input";
 import Button from "../Button";
 import { toast } from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import {signIn} from 'next-auth/react'
-import {useRouter} from 'next/navigation'
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
   const router = useRouter();
-  const registerModal = useRegisterModal();
+  // const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -33,29 +33,29 @@ const LoginModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    signIn('credentials',{
-      ...data,
-      redirect:false,
-    })
-    .then ((callback)=>{
+
+    // check for credentials using sign in function of next-auth
+    signIn("credentials", { ...data, redirect: false }).then((res) => {
       setIsLoading(false);
-      
 
-      if(callback?.ok){
-        toast.success("Logged in")
-        router.refresh();
+      if (res?.ok && !res.error) {
+        toast.success("Succesfully Logged in");
         loginModal.onClose();
+      } else if (res?.error) {
+        toast.error(res.error);
       }
-
-      if(callback?.error){
-        toast.error(callback.error);
-      }
-    })
+      router.refresh();
+      
+    });
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome Back to AirBnb" subtitle="Log in to your account" center />
+      <Heading
+        title="Welcome Back to AirBnb"
+        subtitle="Log in to your account"
+        center
+      />
       <Input
         id="email"
         label="Email"
@@ -81,24 +81,24 @@ const LoginModal = () => {
       <hr />
       <Button
         outline
-        label="Continue with Google"
+        label="Login with Google"
         icon={FcGoogle}
         onClick={() => {}}
       />
       <Button
         outline
-        label="Continue with Github"
+        label="Login with Github"
         icon={AiFillGithub}
         onClick={() => {}}
       />
 
       <div className="flex flex-row items-center gap-2 justify-center">
-        <div>Already have an account?</div>
+        <div>{"Don't"} have an account?</div>
         <div
           className="text-neutral-800 cursor-pointer hover:underline "
           onClick={loginModal.onClose}
         >
-          Log in
+          Sign up
         </div>
       </div>
     </div>
