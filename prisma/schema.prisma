@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,11 +12,11 @@ datasource db {
 
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
+  name           String?
   email          String?   @unique
   emailVerified  DateTime?
   image          String?
-  hashedPassword String
+  hashedPassword String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   favoriteIds    String[]  @db.ObjectId
@@ -46,7 +49,7 @@ model Listing {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   description   String
-  imagesSrc     String
+  imageSrc      String
   createdAt     DateTime @default(now())
   category      String
   roomCount     Int
@@ -69,6 +72,6 @@ model Reservation {
   totalPrice Int
   createdAt  DateTime @default(now())
 
-  User    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }
