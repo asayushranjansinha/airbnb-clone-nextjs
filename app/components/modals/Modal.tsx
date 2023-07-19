@@ -68,9 +68,9 @@ const Modal: React.FC<ModalProps> = ({
             relative
             my-auto
             mx-auto 
-            h-min
             w-full
-            md:h-5/6
+            h-full
+            md:h-min
             md:w-4/6
             lg:w-3/6
             xl:w-2/5
@@ -88,7 +88,8 @@ const Modal: React.FC<ModalProps> = ({
         >
           <div
             className="
-                h-fit
+                h-full
+                md:h-fit
                 max-h-full	
                 border-0
                 shadow-lg
